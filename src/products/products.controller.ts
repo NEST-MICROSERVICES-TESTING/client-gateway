@@ -34,7 +34,7 @@ export class ProductsController {
 
         } catch (error) {
             throw new RpcException(error);
-        }       
+        }
     }
 
     @Patch(':nIdProduct')

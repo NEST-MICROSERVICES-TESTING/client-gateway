@@ -13,12 +13,25 @@ export class OrdersController {
 
     @Post()
     create(@Body() createOrderDto: CreateOrderDto) {
-        return this.client.send('createOrder', createOrderDto);
+        try {
+            return this.client.send('createOrder', createOrderDto);
+        } catch (error) {
+            throw new RpcException(error);
+        }
     }
 
     @Get()
-    findAll(@Query() orderPaginationDto: OrderPaginationDto) {
-        return this.client.send('findAllOrders', orderPaginationDto);
+    async findAll(@Query() orderPaginationDto: OrderPaginationDto) {
+        try {
+
+            const order = await firstValueFrom(
+                this.client.send('findAllOrders', orderPaginationDto)
+            );
+
+            return order;
+        } catch (error) {
+            throw new RpcException(error);
+        }
     }
 
     @Get('id/:nIdOrder')

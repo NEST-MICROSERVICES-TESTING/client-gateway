@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Inject, Query, NotImplementedException, ParseUUIDPipe, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Inject, Query, ParseUUIDPipe, Patch } from '@nestjs/common';
 import { NATS_SERVICE } from 'src/config';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';

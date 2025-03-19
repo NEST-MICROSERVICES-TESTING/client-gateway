@@ -19,6 +19,7 @@ async function bootstrap() {
     app.enableCors();
     
     await app.listen(envs.port);
+    console.log('4to cambio')
     logger.log(`Gateway running on port ${ envs.port }`);
 
 }

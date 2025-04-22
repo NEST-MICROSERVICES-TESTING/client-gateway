@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Param, Inject, Query, NotImplementedException, ParseUUIDPipe, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Inject, Query, ParseUUIDPipe, Patch } from '@nestjs/common';
 import { NATS_SERVICE } from 'src/config';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import { CreateOrderDto, OrderPaginationDto, StatusDto } from './dto';
 import { PaginationDto } from 'src/common';
+
 @Controller('orders')
 export class OrdersController {
 
@@ -12,9 +13,13 @@ export class OrdersController {
     ) {}
 
     @Post()
-    create(@Body() createOrderDto: CreateOrderDto) {
+    async create(@Body() createOrderDto: CreateOrderDto) {
         try {
-            return this.client.send('createOrder', createOrderDto);
+            const result = await firstValueFrom(
+                this.client.send( 'createOrder' , createOrderDto)
+            );
+            
+            return result;
         } catch (error) {
             throw new RpcException(error);
         }
